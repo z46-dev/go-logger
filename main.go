@@ -117,7 +117,7 @@ func (l *Logger) printTimestamp() {
 
 func (l *Logger) Basicf(format string, args ...any) {
 	if l.hasPrefix {
-		fmt.Printf("%s%s%s", l.color, l.prefix, Reset)
+		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
 	}
 
 	l.printTimestamp()
