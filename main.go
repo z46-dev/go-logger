@@ -199,6 +199,20 @@ func (l *Logger) Warning(message string) {
 	l.Warningf("%s\n", message)
 }
 
+func (l *Logger) Queryf(format string, args ...any) {
+	if l.hasPrefix {
+		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	}
+
+	l.printTimestamp()
+
+	fmt.Printf("%s[?]%s %s", Blue, Reset, fmt.Sprintf(format, args...))
+}
+
+func (l *Logger) Query(message string) {
+	l.Queryf("%s\n", message)
+}
+
 func (l *Logger) Customf(format string, color ColorCode, args ...any) {
 	if l.hasPrefix {
 		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
