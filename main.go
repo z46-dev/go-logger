@@ -115,14 +115,29 @@ func (l *Logger) printTimestamp() {
 	}
 }
 
-func (l *Logger) Basicf(format string, args ...any) {
+func (l *Logger) buildOutput(format string, args ...any) {
 	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+		format = "%s%s%s " + format
+		args = append([]any{l.color, l.prefix, Reset}, args...)
 	}
 
-	l.printTimestamp()
+	if l.includeTimestamp {
+		format = "[%s%s%s] " + format
+		args = append([]any{White, l.timestamp(), Reset}, args...)
+	}
 
-	fmt.Printf("%s[>]%s %s", Cyan, Reset, fmt.Sprintf(format, args...))
+	fmt.Printf(format, args...)
+}
+
+func (l *Logger) Basicf(format string, args ...any) {
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
+
+	// l.printTimestamp()
+
+	// fmt.Printf("%s[>]%s %s", Cyan, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[>]%s %s", Cyan, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Basic(message string) {
@@ -130,13 +145,14 @@ func (l *Logger) Basic(message string) {
 }
 
 func (l *Logger) Statusf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[@]%s %s", Magenta, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s[@]%s %s", Magenta, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[@]%s %s", Magenta, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Status(message string) {
@@ -144,13 +160,14 @@ func (l *Logger) Status(message string) {
 }
 
 func (l *Logger) Errorf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[!]%s %s", BoldRed, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s[!]%s %s", BoldRed, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[!]%s %s", BoldRed, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Error(message string) {
@@ -158,13 +175,14 @@ func (l *Logger) Error(message string) {
 }
 
 func (l *Logger) Importantf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[#]%s %s%s%s", BoldRed, Reset, Bold, fmt.Sprintf(format, args...), Reset)
+	// fmt.Printf("%s[#]%s %s%s%s", BoldRed, Reset, Bold, fmt.Sprintf(format, args...), Reset)
+	l.buildOutput("%s[#]%s %s%s%s", BoldRed, Reset, Bold, fmt.Sprintf(format, args...), Reset)
 }
 
 func (l *Logger) Important(message string) {
@@ -172,13 +190,14 @@ func (l *Logger) Important(message string) {
 }
 
 func (l *Logger) Successf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[+]%s %s", Green, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s[+]%s %s", Green, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[+]%s %s", Green, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Success(message string) {
@@ -186,13 +205,14 @@ func (l *Logger) Success(message string) {
 }
 
 func (l *Logger) Warningf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[-]%s %s", Yellow, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s[-]%s %s", Yellow, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[-]%s %s", Yellow, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Warning(message string) {
@@ -200,13 +220,14 @@ func (l *Logger) Warning(message string) {
 }
 
 func (l *Logger) Queryf(format string, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s[?]%s %s ", Blue, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s[?]%s %s ", Blue, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s[?]%s %s ", Blue, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Query(message string) {
@@ -214,13 +235,14 @@ func (l *Logger) Query(message string) {
 }
 
 func (l *Logger) Customf(format string, color ColorCode, args ...any) {
-	if l.hasPrefix {
-		fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
-	}
+	// if l.hasPrefix {
+	// 	fmt.Printf("%s%s%s ", l.color, l.prefix, Reset)
+	// }
 
-	l.printTimestamp()
+	// l.printTimestamp()
 
-	fmt.Printf("%s%s%s", color, Reset, fmt.Sprintf(format, args...))
+	// fmt.Printf("%s%s%s", color, Reset, fmt.Sprintf(format, args...))
+	l.buildOutput("%s%s%s", color, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Custom(message string, color ColorCode) {
