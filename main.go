@@ -206,11 +206,11 @@ func (l *Logger) Queryf(format string, args ...any) {
 
 	l.printTimestamp()
 
-	fmt.Printf("%s[?]%s %s", Blue, Reset, fmt.Sprintf(format, args...))
+	fmt.Printf("%s[?]%s %s ", Blue, Reset, fmt.Sprintf(format, args...))
 }
 
 func (l *Logger) Query(message string) {
-	l.Queryf("%s\n", message)
+	l.Queryf("%s", message)
 }
 
 func (l *Logger) Customf(format string, color ColorCode, args ...any) {
